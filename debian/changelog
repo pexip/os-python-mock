@@ -1,0 +1,32 @@
+python-mock (0.7.2-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #617799)
+  * Set PMPT as maintainer and myself as uploader.
+  * Switch to source format 3.0 (quilt).
+  * Switch to dh_python2.
+  * Use pypi.python.org in d/watch.
+  * Use DEP5 for copyright file.
+  * Streamline packaging code with wrap-and-sort.
+  * Bumped Standards-Version to 3.9.2 (no change necessary).
+  * Move HTML documentation to u/s/d/python-mock/html/.
+  * Use dh_link to create the documentation source symlinks.
+  * Set X-P-V to >= 2.4.
+  * Build for Python3.
+  * Use dh_sphinxdoc.
+  * Ship documentation in separate package.
+
+ -- Fladischer Michael <FladischerMichael@fladi.at>  Tue, 23 Aug 2011 13:13:44 +0200
+
+python-mock (0.6.0-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix "doesn't depend on python" by applying patch to debian/control
+    by Jakub Wilk (Closes: #588586)
+
+ -- Marek Kubica <marek@xivilization.net>  Sat, 17 Jul 2010 12:27:08 +0200
+
+python-mock (0.6.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #540372)
+
+ -- David Watson <david@kutoken.com>  Fri, 21 Aug 2009 14:22:49 +0100
