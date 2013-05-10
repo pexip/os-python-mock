@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Copyright (C) 2007-2011 Michael Foord & the mock team
+# Copyright (C) 2007-2012 Michael Foord & the mock team
 # E-mail: fuzzyman AT voidspace DOT org DOT uk
 # http://www.voidspace.org.uk/python/mock/
 
@@ -26,13 +26,15 @@ CLASSIFIERS = [
     'Programming Language :: Python',
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 2.4',
     'Programming Language :: Python :: 2.5',
     'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
-    'Programming Language :: Python :: 3.0',
     'Programming Language :: Python :: 3.1',
     'Programming Language :: Python :: 3.2',
+    'Programming Language :: Python :: 3.3',
+    'Programming Language :: Python :: Implementation :: CPython',
+    'Programming Language :: Python :: Implementation :: PyPy',
+    'Programming Language :: Python :: Implementation :: Jython',
     'Operating System :: OS Independent',
     'Topic :: Software Development :: Libraries',
     'Topic :: Software Development :: Libraries :: Python Modules',

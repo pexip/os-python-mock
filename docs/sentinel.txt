@@ -7,17 +7,11 @@
 
 .. testsetup::
 
-    import os, sys, unittest
-    if not os.getcwd() in sys.path:
-        sys.path.append(os.getcwd())
-
-    from mock import Mock, sentinel
-
     class ProductionClass(object):
         def something(self):
             return self.method()
 
-    class Test(unittest.TestCase):
+    class Test(unittest2.TestCase):
         def testSomething(self):
             pass
     self = Test('testSomething')
@@ -35,8 +29,8 @@
 
 .. data:: DEFAULT
 
-    The ``DEFAULT`` object is a pre-created sentinel (actually
-    ``sentinel.DEFAULT``). It can be used by :attr:`Mock.side_effect`
+    The `DEFAULT` object is a pre-created sentinel (actually
+    `sentinel.DEFAULT`). It can be used by :attr:`~Mock.side_effect`
     functions to indicate that the normal return value should be used.
 
 
@@ -59,6 +53,6 @@ In this example we monkey patch `method` to return
     >>> result = real.method()
     >>> assert result is sentinel.some_object
     >>> sentinel.some_object
-    <SentinelObject "some_object">
+    sentinel.some_object
 
 
