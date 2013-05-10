@@ -1,12 +1,12 @@
-# Copyright (C) 2007-2011 Michael Foord & the mock team
+# Copyright (C) 2007-2012 Michael Foord & the mock team
 # E-mail: fuzzyman AT voidspace DOT org DOT uk
 # http://www.voidspace.org.uk/python/mock/
 
 from __future__ import with_statement
 
-from tests.support import unittest2
+from tests.support import unittest2, is_instance
 
-from mock import MagicMock, Mock, patch, sentinel
+from mock import MagicMock, Mock, patch, sentinel, mock_open, call
 
 from tests.support_with import catch_warnings, nested
 
@@ -14,14 +14,16 @@ something  = sentinel.Something
 something_else  = sentinel.SomethingElse
 
 
+
 class WithTest(unittest2.TestCase):
 
-    def testWithStatement(self):
+    def test_with_statement(self):
         with patch('tests._testwith.something', sentinel.Something2):
             self.assertEqual(something, sentinel.Something2, "unpatched")
         self.assertEqual(something, sentinel.Something)
 
-    def testWithStatementException(self):
+
+    def test_with_statement_exception(self):
         try:
             with patch('tests._testwith.something', sentinel.Something2):
                 self.assertEqual(something, sentinel.Something2, "unpatched")
@@ -33,33 +35,36 @@ class WithTest(unittest2.TestCase):
         self.assertEqual(something, sentinel.Something)
 
 
-    def testWithStatementAs(self):
+    def test_with_statement_as(self):
         with patch('tests._testwith.something') as mock_something:
             self.assertEqual(something, mock_something, "unpatched")
-            self.assertTrue(isinstance(mock_something, Mock), "patching wrong type")
+            self.assertTrue(is_instance(mock_something, MagicMock),
+                            "patching wrong type")
         self.assertEqual(something, sentinel.Something)
 
 
-    def testPatchObjectWithStatementAs(self):
-        mock = Mock()
-        original = mock.something
-        with patch.object(mock, 'something'):
-            self.assertNotEqual(mock.something, original, "unpatched")
-        self.assertEqual(mock.something, original)
+    def test_patch_object_with_statement(self):
+        class Foo(object):
+            something = 'foo'
+        original = Foo.something
+        with patch.object(Foo, 'something'):
+            self.assertNotEqual(Foo.something, original, "unpatched")
+        self.assertEqual(Foo.something, original)
 
 
-    def testWithStatementNested(self):
+    def test_with_statement_nested(self):
         with catch_warnings(record=True):
             # nested is deprecated in Python 2.7
             with nested(patch('tests._testwith.something'),
                     patch('tests._testwith.something_else')) as (mock_something, mock_something_else):
                 self.assertEqual(something, mock_something, "unpatched")
-                self.assertEqual(something_else, mock_something_else, "unpatched")
+                self.assertEqual(something_else, mock_something_else,
+                                 "unpatched")
         self.assertEqual(something, sentinel.Something)
         self.assertEqual(something_else, sentinel.SomethingElse)
 
 
-    def testWithStatementSpecified(self):
+    def test_with_statement_specified(self):
         with patch('tests._testwith.something', sentinel.Patched) as mock_something:
             self.assertEqual(something, mock_something, "unpatched")
             self.assertEqual(mock_something, sentinel.Patched, "wrong patch")
@@ -78,7 +83,7 @@ class WithTest(unittest2.TestCase):
         mock.__exit__.assert_called_with(None, None, None)
 
 
-    def testContextManagerWithMagicMock(self):
+    def test_context_manager_with_magic_mock(self):
         mock = MagicMock()
 
         with self.assertRaises(TypeError):
@@ -88,28 +93,32 @@ class WithTest(unittest2.TestCase):
         self.assertTrue(mock.__exit__.called)
 
 
-    def testWithStatementSameAttribute(self):
+    def test_with_statement_same_attribute(self):
         with patch('tests._testwith.something', sentinel.Patched) as mock_something:
             self.assertEqual(something, mock_something, "unpatched")
 
             with patch('tests._testwith.something') as mock_again:
                 self.assertEqual(something, mock_again, "unpatched")
 
-            self.assertEqual(something, mock_something, "restored with wrong instance")
+            self.assertEqual(something, mock_something,
+                             "restored with wrong instance")
 
         self.assertEqual(something, sentinel.Something, "not restored")
 
-    def testWithStatementImbricated(self):
+
+    def test_with_statement_imbricated(self):
         with patch('tests._testwith.something') as mock_something:
             self.assertEqual(something, mock_something, "unpatched")
 
             with patch('tests._testwith.something_else') as mock_something_else:
-                self.assertEqual(something_else, mock_something_else, "unpatched")
+                self.assertEqual(something_else, mock_something_else,
+                                 "unpatched")
 
         self.assertEqual(something, sentinel.Something)
         self.assertEqual(something_else, sentinel.SomethingElse)
 
-    def testDictContextManager(self):
+
+    def test_dict_context_manager(self):
         foo = {}
         with patch.dict(foo, {'a': 'b'}):
             self.assertEqual(foo, {'a': 'b'})
@@ -121,6 +130,51 @@ class WithTest(unittest2.TestCase):
                 raise NameError('Konrad')
 
         self.assertEqual(foo, {})
+
+
+
+class TestMockOpen(unittest2.TestCase):
+
+    def test_mock_open(self):
+        mock = mock_open()
+        with patch('%s.open' % __name__, mock, create=True) as patched:
+            self.assertIs(patched, mock)
+            open('foo')
+
+        mock.assert_called_once_with('foo')
+
+
+    def test_mock_open_context_manager(self):
+        mock = mock_open()
+        handle = mock.return_value
+        with patch('%s.open' % __name__, mock, create=True):
+            with open('foo') as f:
+                f.read()
+
+        expected_calls = [call('foo'), call().__enter__(), call().read(),
+                          call().__exit__(None, None, None)]
+        self.assertEqual(mock.mock_calls, expected_calls)
+        self.assertIs(f, handle)
+
+
+    def test_explicit_mock(self):
+        mock = MagicMock()
+        mock_open(mock)
+
+        with patch('%s.open' % __name__, mock, create=True) as patched:
+            self.assertIs(patched, mock)
+            open('foo')
+
+        mock.assert_called_once_with('foo')
+
+
+    def test_read_data(self):
+        mock = mock_open(read_data='foo')
+        with patch('%s.open' % __name__, mock, create=True):
+            h = open('bar')
+            result = h.read()
+
+        self.assertEqual(result, 'foo')
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2011 Michael Foord & the mock team
+# Copyright (C) 2007-2012 Michael Foord & the mock team
 # E-mail: fuzzyman AT voidspace DOT org DOT uk
 # http://www.voidspace.org.uk/python/mock/
 
@@ -10,12 +10,15 @@ from mock import sentinel, DEFAULT
 class SentinelTest(unittest2.TestCase):
 
     def testSentinels(self):
-        self.assertEqual(sentinel.whatever, sentinel.whatever, 'sentinel not stored')
-        self.assertNotEqual(sentinel.whatever, sentinel.whateverelse, 'sentinel should be unique')
+        self.assertEqual(sentinel.whatever, sentinel.whatever,
+                         'sentinel not stored')
+        self.assertNotEqual(sentinel.whatever, sentinel.whateverelse,
+                            'sentinel should be unique')
 
 
     def testSentinelName(self):
-        self.assertEqual(str(sentinel.whatever), '<SentinelObject "whatever">', 'sentinel name incorrect')
+        self.assertEqual(str(sentinel.whatever), 'sentinel.whatever',
+                         'sentinel name incorrect')
 
 
     def testDEFAULT(self):

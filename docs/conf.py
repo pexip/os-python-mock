@@ -25,13 +25,38 @@ from mock import __version__
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.doctest', 'sphinx.ext.autodoc']
+extensions = ['sphinx.ext.doctest']
 
-html_theme = 'basic'
+doctest_global_setup = """
+import os
+import sys
+import mock
+from mock import * # yeah, I know :-/
+import unittest2
+import __main__
+
+if os.getcwd() not in sys.path:
+    sys.path.append(os.getcwd())
+
+# keep a reference to __main__
+sys.modules['__main'] = __main__
+
+class ProxyModule(object):
+    def __init__(self):
+        self.__dict__ = globals()
+
+sys.modules['__main__'] = ProxyModule()
+"""
+
+doctest_global_cleanup = """
+sys.modules['__main__'] = sys.modules['__main']
+"""
+
+html_theme = 'nature'
 html_theme_options = {}
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+#templates_path = ['_templates']
 
 # The suffix of source filenames.
 source_suffix = '.txt'
@@ -41,7 +66,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = u'Mock'
-copyright = u'2007-2011, Michael Foord & the mock team'
+copyright = u'2007-2012, Michael Foord & the mock team'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
@@ -88,7 +113,7 @@ pygments_style = 'friendly'
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
 # given in html_static_path.
-html_style = 'adctheme.css'
+#html_style = 'adctheme.css'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -109,7 +134,7 @@ html_style = 'adctheme.css'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+#html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
