@@ -1,14 +1,14 @@
-Format: http://anonscm.debian.org/viewvc/dep/web/deps/dep5.mdwn?view=markup&pathrev=174
-Upstream-Name: anyjson
-Upstream-Contact: Rune Halvorsen <runefh@gmail.com>
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: mock
+Upstream-Contact: Michael Foord <fuzzyman@voidspace.org.uk>
 Source: http://www.voidspace.org.uk/python/mock/
 
 Files: *
-Copyright: 2003-2009, Michael Foord <fuzzyman@voidspace.org.uk>
+Copyright: 2003-2012, Michael Foord <fuzzyman@voidspace.org.uk>
 License: BSD-mock
 
 Files: debian/*
-Copyright: 2011, Fladischer Michael <FladischerMichael@fladi.at>
+Copyright: 2012-2013, Michael Fladischer <FladischerMichael@fladi.at>
            2009, David Watson <david@kutoken.com>
 License: BSD-mock
 

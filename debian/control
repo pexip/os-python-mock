@@ -3,19 +3,20 @@ Section: python
 Priority: extra
 Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
 Uploaders: David Watson <david@kutoken.com>,
-           Fladischer Michael <FladischerMichael@fladi.at>
+           Michael Fladischer <FladischerMichael@fladi.at>
 Build-Depends: debhelper (>= 8),
                python-all (>= 2.6.6-3~),
                python-setuptools,
+               python-unittest2,
                python3-all (>= 3.1.2-12~),
                python3-setuptools
 Build-Depends-Indep: libjs-jquery, python-sphinx (>= 1.0.7+dfsg-1~)
-Standards-Version: 3.9.2
+Standards-Version: 3.9.5
 X-Python-Version: >= 2.4
 X-Python3-Version: >= 3.0
 Homepage: http://www.voidspace.org.uk/python/mock/
-Vcs-Svn: svn://svn.debian.org/python-modules/packages/python-mock/trunk/
-Vcs-Browser: http://svn.debian.org/viewsvn/python-modules/packages/python-mock/trunk/
+Vcs-Svn: svn://anonscm.debian.org/python-modules/packages/python-mock/trunk/
+Vcs-Browser: http://anonscm.debian.org/viewvc/python-modules/packages/python-mock/trunk/
 
 Package: python-mock
 Architecture: all
@@ -47,6 +48,8 @@ Package: python-mock-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}, ${sphinxdoc:Depends}
+Breaks: python-mock (<< 0.7.2)
+Replaces: python-mock (<< 0.7.2)
 Description: Mocking and Testing Library (Documentation)
  mock provides a core mock.Mock class that is intended to reduce the
  need to create a host of trivial stubs throughout your test suite.

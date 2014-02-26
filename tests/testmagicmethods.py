@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2011 Michael Foord & the mock team
+# Copyright (C) 2007-2012 Michael Foord & the mock team
 # E-mail: fuzzyman AT voidspace DOT org DOT uk
 # http://www.voidspace.org.uk/python/mock/
 
@@ -12,13 +12,14 @@ except NameError:
     long = int
 
 import inspect
+import sys
 from mock import Mock, MagicMock, _magics
 
 
 
 class TestMockingMagicMethods(unittest2.TestCase):
 
-    def testDeletingMagicMethods(self):
+    def test_deleting_magic_methods(self):
         mock = Mock()
         self.assertFalse(hasattr(mock, '__getitem__'))
 
@@ -29,7 +30,20 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertFalse(hasattr(mock, '__getitem__'))
 
 
-    def testMagicMethodWrapping(self):
+    def test_magicmock_del(self):
+        mock = MagicMock()
+        # before using getitem
+        del mock.__getitem__
+        self.assertRaises(TypeError, lambda: mock['foo'])
+
+        mock = MagicMock()
+        # this time use it first
+        mock['foo']
+        del mock.__getitem__
+        self.assertRaises(TypeError, lambda: mock['foo'])
+
+
+    def test_magic_method_wrapping(self):
         mock = Mock()
         def f(self, name):
             return self, 'fish'
@@ -37,18 +51,13 @@ class TestMockingMagicMethods(unittest2.TestCase):
         mock.__getitem__ = f
         self.assertFalse(mock.__getitem__ is f)
         self.assertEqual(mock['foo'], (mock, 'fish'))
-
-        # When you pull the function back of the *instance*
-        # the first argument (self) is removed
-        def instance_f(name):
-            pass
-        self.assertEqual(inspect.getargspec(mock.__getitem__), inspect.getargspec(instance_f))
+        self.assertEqual(mock.__getitem__('foo'), (mock, 'fish'))
 
         mock.__getitem__ = mock
         self.assertTrue(mock.__getitem__ is mock)
 
 
-    def testMagicMethodsIsolatedBetweenMocks(self):
+    def test_magic_methods_isolated_between_mocks(self):
         mock1 = Mock()
         mock2 = Mock()
 
@@ -56,21 +65,23 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertEqual(list(mock1), [])
         self.assertRaises(TypeError, lambda: list(mock2))
 
-    def testRepr(self):
+
+    def test_repr(self):
         mock = Mock()
-        self.assertEqual(repr(mock), object.__repr__(mock))
+        self.assertEqual(repr(mock), "<Mock id='%s'>" % id(mock))
         mock.__repr__ = lambda s: 'foo'
         self.assertEqual(repr(mock), 'foo')
 
 
-    def testStr(self):
+    def test_str(self):
         mock = Mock()
         self.assertEqual(str(mock), object.__str__(mock))
         mock.__str__ = lambda s: 'foo'
         self.assertEqual(str(mock), 'foo')
 
+
     @unittest2.skipIf(inPy3k, "no unicode in Python 3")
-    def testUnicode(self):
+    def test_unicode(self):
         mock = Mock()
         self.assertEqual(unicode(mock), unicode(str(mock)))
 
@@ -78,7 +89,7 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertEqual(unicode(mock), unicode('foo'))
 
 
-    def testDictMethods(self):
+    def test_dict_methods(self):
         mock = Mock()
 
         self.assertRaises(TypeError, lambda: mock['foo'])
@@ -109,7 +120,7 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertEqual(_dict, {})
 
 
-    def testNumeric(self):
+    def test_numeric(self):
         original = mock = Mock()
         mock.value = 0
 
@@ -137,7 +148,33 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertEqual(mock.value, 16)
 
 
-    def testHash(self):
+    @unittest2.skipIf(inPy3k, 'no truediv in Python 3')
+    def test_truediv(self):
+        mock = MagicMock()
+        mock.__truediv__.return_value = 6
+
+        context = {'mock': mock}
+        code = 'from __future__ import division\nresult = mock / 7\n'
+        exec(code, context)
+        self.assertEqual(context['result'], 6)
+
+        mock.__rtruediv__.return_value = 3
+        code = 'from __future__ import division\nresult = 2 / mock\n'
+        exec(code, context)
+        self.assertEqual(context['result'], 3)
+
+
+    @unittest2.skipIf(not inPy3k, 'truediv is available in Python 2')
+    def test_no_truediv(self):
+        self.assertRaises(
+            AttributeError, getattr, MagicMock(), '__truediv__'
+        )
+        self.assertRaises(
+            AttributeError, getattr, MagicMock(), '__rtruediv__'
+        )
+
+
+    def test_hash(self):
         mock = Mock()
         # test delegation
         self.assertEqual(hash(mock), Mock.__hash__(mock))
@@ -148,7 +185,7 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertEqual(hash(mock), 3)
 
 
-    def testNonZero(self):
+    def test_nonzero(self):
         m = Mock()
         self.assertTrue(bool(m))
 
@@ -161,13 +198,28 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertFalse(bool(m))
 
 
-    def testComparison(self):
+    def test_comparison(self):
+        # note: this test fails with Jython 2.5.1 due to a Jython bug
+        #       it is fixed in jython 2.5.2
         if not inPy3k:
             # incomparable in Python 3
             self. assertEqual(Mock() < 3, object() < 3)
             self. assertEqual(Mock() > 3, object() > 3)
             self. assertEqual(Mock() <= 3, object() <= 3)
             self. assertEqual(Mock() >= 3, object() >= 3)
+        else:
+            self.assertRaises(TypeError, lambda: MagicMock() < object())
+            self.assertRaises(TypeError, lambda: object() < MagicMock())
+            self.assertRaises(TypeError, lambda: MagicMock() < MagicMock())
+            self.assertRaises(TypeError, lambda: MagicMock() > object())
+            self.assertRaises(TypeError, lambda: object() > MagicMock())
+            self.assertRaises(TypeError, lambda: MagicMock() > MagicMock())
+            self.assertRaises(TypeError, lambda: MagicMock() <= object())
+            self.assertRaises(TypeError, lambda: object() <= MagicMock())
+            self.assertRaises(TypeError, lambda: MagicMock() <= MagicMock())
+            self.assertRaises(TypeError, lambda: MagicMock() >= object())
+            self.assertRaises(TypeError, lambda: object() >= MagicMock())
+            self.assertRaises(TypeError, lambda: MagicMock() >= MagicMock())
 
         mock = Mock()
         def comp(s, o):
@@ -182,7 +234,9 @@ class TestMockingMagicMethods(unittest2.TestCase):
     def test_equality(self):
         for mock in Mock(), MagicMock():
             self.assertEqual(mock == mock, True)
+            self.assertIsInstance(mock == mock, bool)
             self.assertEqual(mock != mock, False)
+            self.assertIsInstance(mock != mock, bool)
             self.assertEqual(mock == object(), False)
             self.assertEqual(mock != object(), True)
 
@@ -200,13 +254,15 @@ class TestMockingMagicMethods(unittest2.TestCase):
 
         mock = MagicMock()
         mock.__eq__.return_value = True
+        self.assertIsInstance(mock == 3, bool)
         self.assertEqual(mock == 3, True)
 
         mock.__ne__.return_value = False
+        self.assertIsInstance(mock != 3, bool)
         self.assertEqual(mock != 3, False)
 
 
-    def testLenContainsIter(self):
+    def test_len_contains_iter(self):
         mock = Mock()
 
         self.assertRaises(TypeError, len, mock)
@@ -224,19 +280,18 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertEqual(list(mock), list('foobarbaz'))
 
 
-    def testMagicMock(self):
+    def test_magicmock(self):
         mock = MagicMock()
 
         mock.__iter__.return_value = iter([1, 2, 3])
         self.assertEqual(list(mock), [1, 2, 3])
 
+        name = '__nonzero__'
+        other = '__bool__'
         if inPy3k:
-            mock.__bool__.return_value = False
-            self.assertFalse(hasattr(mock, '__nonzero__'))
-        else:
-            mock.__nonzero__.return_value = False
-            self.assertFalse(hasattr(mock, '__bool__'))
-
+            name, other = other, name
+        getattr(mock, name).return_value = False
+        self.assertFalse(hasattr(mock, other))
         self.assertFalse(bool(mock))
 
         for entry in _magics:
@@ -244,7 +299,18 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertFalse(hasattr(mock, '__imaginery__'))
 
 
-    def testMagicMockDefaults(self):
+    def test_magic_mock_equality(self):
+        mock = MagicMock()
+        self.assertIsInstance(mock == object(), bool)
+        self.assertIsInstance(mock != object(), bool)
+
+        self.assertEqual(mock == object(), False)
+        self.assertEqual(mock != object(), True)
+        self.assertEqual(mock == mock, True)
+        self.assertEqual(mock != mock, False)
+
+
+    def test_magicmock_defaults(self):
         mock = MagicMock()
         self.assertEqual(int(mock), 1)
         self.assertEqual(complex(mock), 1j)
@@ -269,7 +335,7 @@ class TestMockingMagicMethods(unittest2.TestCase):
 
 
     @unittest2.skipIf(inPy3k, "no __cmp__ in Python 3")
-    def testNonDefaultMagicMethods(self):
+    def test_non_default_magic_methods(self):
         mock = MagicMock()
         self.assertRaises(AttributeError, lambda: mock.__cmp__)
 
@@ -279,7 +345,7 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertEqual(mock, object())
 
 
-    def testMagicMethodsAndSpec(self):
+    def test_magic_methods_and_spec(self):
         class Iterable(object):
             def __iter__(self):
                 pass
@@ -304,7 +370,7 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertRaises(AttributeError, set_int)
 
 
-    def testMagicMethodsAndSpecSet(self):
+    def test_magic_methods_and_spec_set(self):
         class Iterable(object):
             def __iter__(self):
                 pass
@@ -329,7 +395,7 @@ class TestMockingMagicMethods(unittest2.TestCase):
         self.assertRaises(AttributeError, set_int)
 
 
-    def testSettingUnsupportedMagicMethod(self):
+    def test_setting_unsupported_magic_method(self):
         mock = MagicMock()
         def set_setattr():
             mock.__setattr__ = lambda self, name: None
@@ -339,7 +405,7 @@ class TestMockingMagicMethods(unittest2.TestCase):
         )
 
 
-    def testAttributesAndReturnValue(self):
+    def test_attributes_and_return_value(self):
         mock = MagicMock()
         attr = mock.foo
         def _get_type(obj):
@@ -351,6 +417,69 @@ class TestMockingMagicMethods(unittest2.TestCase):
         returned = mock()
         self.assertEqual(_get_type(returned), MagicMock)
 
+
+    def test_magic_methods_are_magic_mocks(self):
+        mock = MagicMock()
+        self.assertIsInstance(mock.__getitem__, MagicMock)
+
+        mock[1][2].__getitem__.return_value = 3
+        self.assertEqual(mock[1][2][3], 3)
+
+
+    def test_magic_method_reset_mock(self):
+        mock = MagicMock()
+        str(mock)
+        self.assertTrue(mock.__str__.called)
+        mock.reset_mock()
+        self.assertFalse(mock.__str__.called)
+
+
+    @unittest2.skipUnless(sys.version_info[:2] >= (2, 6),
+                          "__dir__ not available until Python 2.6 or later")
+    def test_dir(self):
+        # overriding the default implementation
+        for mock in Mock(), MagicMock():
+            def _dir(self):
+                return ['foo']
+            mock.__dir__ = _dir
+            self.assertEqual(dir(mock), ['foo'])
+
+
+    @unittest2.skipIf('PyPy' in sys.version, "This fails differently on pypy")
+    def test_bound_methods(self):
+        m = Mock()
+
+        # XXXX should this be an expected failure instead?
+
+        # this seems like it should work, but is hard to do without introducing
+        # other api inconsistencies. Failure message could be better though.
+        m.__iter__ = [3].__iter__
+        self.assertRaises(TypeError, iter, m)
+
+
+    def test_magic_method_type(self):
+        class Foo(MagicMock):
+            pass
+
+        foo = Foo()
+        self.assertIsInstance(foo.__int__, Foo)
+
+
+    def test_descriptor_from_class(self):
+        m = MagicMock()
+        type(m).__str__.return_value = 'foo'
+        self.assertEqual(str(m), 'foo')
+
+
+    def test_iterable_as_iter_return_value(self):
+        m = MagicMock()
+        m.__iter__.return_value = [1, 2, 3]
+        self.assertEqual(list(m), [1, 2, 3])
+        self.assertEqual(list(m), [1, 2, 3])
+
+        m.__iter__.return_value = iter([4, 5, 6])
+        self.assertEqual(list(m), [4, 5, 6])
+        self.assertEqual(list(m), [])
 
 
 if __name__ == '__main__':

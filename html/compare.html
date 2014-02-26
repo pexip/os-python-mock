@@ -2,17 +2,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Mock Library Comparison &mdash; Mock v0.7.2 documentation</title>
-    <link rel="stylesheet" href="_static/adctheme.css" type="text/css" />
+    <title>Mock Library Comparison &mdash; Mock 1.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.7.2',
+        VERSION:     '1.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,90 +24,32 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-  <link rel="top" title="Mock v0.7.2 documentation" href="index.html" />
-  <link rel="next" title="TODO and Limitations" href="changelog.html" />
-  <link rel="prev" title="Further Examples" href="examples.html" />
-  <link media="only screen and (max-device-width: 480px)" href="_static/mobile.css" type="text/css" rel="stylesheet" /> 
+    <link rel="top" title="Mock 1.0.1 documentation" href="index.html" />
+    <link rel="next" title="CHANGELOG" href="changelog.html" />
+    <link rel="prev" title="Further Examples" href="examples.html" /> 
   </head>
   <body>
-<div id="docstitle">
-  <p>Mock v0.7.2 documentation</p>
-</div>
-<div id="header">
-  <div id="title"><h1>Mock Library Comparison</h1></div>
-  <ul id="headerButtons">
-    <li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
-    <li id="page_buttons">
-      <div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
-      <div class="headerButton"><a href="changelog.html" title="TODO and Limitations" accesskey="N">next</a></div>
-      <div class="headerButton"><a href="examples.html" title="Further Examples" accesskey="P">previous</a></div>
-    </li>
-  </ul>
-</div>
-
-<div id="sphinxsidebar">
-  <div class="sphinxsidebarwrapper">
-    <ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
-    <ul>
-<li class="toctree-l1"><a class="reference internal" href="mock.html">The Mock Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="patch.html">Patch Decorators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sentinel.html">Sentinel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="magicmock.html">Mocking Magic Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="magicmock.html#magic-mock">Magic Mock</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mocksignature.html">mocksignature</a></li>
-</ul>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started with Mock</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Further Examples</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Mock Library Comparison</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#simple-fake-object">Simple fake object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#simple-mock">Simple mock</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-partial-mocks">Creating partial mocks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ensure-calls-are-made-in-specific-order">Ensure calls are made in specific order</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#raising-exceptions">Raising exceptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#override-new-instances-of-a-class">Override new instances of a class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#call-the-same-method-multiple-times">Call the same method multiple times</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mock-chained-methods">Mock chained methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mocking-a-context-manager">Mocking a context manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mocking-the-builtin-open-used-as-a-context-manager">Mocking the builtin open used as a context manager</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">TODO and Limitations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html#changelog">CHANGELOG</a></li>
-</ul>
-
-      <h3>This Page</h3>
-      <ul class="this-page-menu">
-        <li><a href="_sources/compare.txt"
-          rel="nofollow">Show Source</a></li>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="changelog.html" title="CHANGELOG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="Further Examples"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Mock 1.0.1 documentation</a> &raquo;</li> 
       </ul>
-    <div id="searchbox" style="display: none">
-      
-        <form class="search" action="search.html" method="get">
-          <div class="search-wrapper">
-          <span class="search-left"></span>
-          <input class="prettysearch" type="text" name="q" size="18" />
-          <span class="search-right">&nbsp;</span>
-          </div>
-        <input type="submit" value="Search" class="searchbutton" />
-        <input type="hidden" name="check_keywords" value="yes" />
-        <input type="hidden" name="area" value="default" />
-        </form>
-        <p class="searchtip" style="font-size: 90%">
-        Enter search terms or a module, class or function name.
-        </p>
-    </div>
-    <script type="text/javascript">$('#searchbox').show(0);</script>
-  </div>
-</div>
-
-
+    </div>  
 
     <div class="document">
-  <div class="documentwrapper">
-    <div class="bodywrapper">
-    <div class="body">
-      
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
   <div class="section" id="mock-library-comparison">
 <h1>Mock Library Comparison<a class="headerlink" href="#mock-library-comparison" title="Permalink to this headline">¶</a></h1>
 <p>A side-by-side comparison of how to accomplish some basic tasks with mock and
@@ -299,10 +244,10 @@ true for Dingus.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># mock</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_mock</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">SomeObject</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_mock</span><span class="o">.</span><span class="n">method1</span><span class="p">()</span>
-<span class="go">&lt;mock.Mock object at 0x...&gt;</span>
+<span class="go">&lt;Mock name=&#39;mock.method1()&#39; id=&#39;...&#39;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_mock</span><span class="o">.</span><span class="n">method2</span><span class="p">()</span>
-<span class="go">&lt;mock.Mock object at 0x...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">assertEqual</span><span class="p">(</span><span class="n">my_mock</span><span class="o">.</span><span class="n">method_calls</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;method1&#39;</span><span class="p">,),</span> <span class="p">(</span><span class="s">&#39;method2&#39;</span><span class="p">,)])</span>
+<span class="go">&lt;Mock name=&#39;mock.method2()&#39; id=&#39;...&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assertEqual</span><span class="p">(</span><span class="n">my_mock</span><span class="o">.</span><span class="n">mock_calls</span><span class="p">,</span> <span class="p">[</span><span class="n">call</span><span class="o">.</span><span class="n">method1</span><span class="p">(),</span> <span class="n">call</span><span class="o">.</span><span class="n">method2</span><span class="p">()])</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Flexmock</span>
@@ -422,7 +367,10 @@ true for Dingus.</p>
 <span class="n">assertEqual</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">,</span> <span class="n">some_module</span><span class="o">.</span><span class="n">SomeClass</span><span class="p">())</span>
 
 <span class="c"># Mocker</span>
-<span class="c"># (TODO)</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">mocker</span><span class="o">.</span><span class="n">mock</span><span class="p">()</span>
+<span class="n">klass</span> <span class="o">=</span> <span class="n">mocker</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">SomeClass</span><span class="p">,</span> <span class="n">spec</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">klass</span><span class="p">(</span><span class="s">&#39;expected&#39;</span><span class="p">,</span> <span class="s">&#39;args&#39;</span><span class="p">)</span>
+<span class="n">mocker</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Dingus</span>
@@ -454,9 +402,9 @@ how the mock was used.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># mock</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_mock</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_mock</span><span class="o">.</span><span class="n">some_method</span><span class="p">()</span>
-<span class="go">&lt;mock.Mock object at 0x...&gt;</span>
+<span class="go">&lt;Mock name=&#39;mock.some_method()&#39; id=&#39;...&#39;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_mock</span><span class="o">.</span><span class="n">some_method</span><span class="p">()</span>
-<span class="go">&lt;mock.Mock object at 0x...&gt;</span>
+<span class="go">&lt;Mock name=&#39;mock.some_method()&#39; id=&#39;...&#39;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">my_mock</span><span class="o">.</span><span class="n">some_method</span><span class="o">.</span><span class="n">call_count</span> <span class="o">&gt;=</span> <span class="mi">2</span>
 </pre></div>
 </div>
@@ -650,23 +598,75 @@ how the mock was used.</p>
 </div>
 
 
-    </div>
-    </div>
-  </div>
-<div class="footer">
-<p>
-  &copy; Copyright 2007-2011, Michael Foord &amp; the mock team.
-  Last updated on May 30, 2011.
-  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
-Theme: <a href="https://github.com/coordt/ADCtheme/">ADCtheme</a>
-</p>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mock Library Comparison</a><ul>
+<li><a class="reference internal" href="#simple-fake-object">Simple fake object</a></li>
+<li><a class="reference internal" href="#simple-mock">Simple mock</a></li>
+<li><a class="reference internal" href="#creating-partial-mocks">Creating partial mocks</a></li>
+<li><a class="reference internal" href="#ensure-calls-are-made-in-specific-order">Ensure calls are made in specific order</a></li>
+<li><a class="reference internal" href="#raising-exceptions">Raising exceptions</a></li>
+<li><a class="reference internal" href="#override-new-instances-of-a-class">Override new instances of a class</a></li>
+<li><a class="reference internal" href="#call-the-same-method-multiple-times">Call the same method multiple times</a></li>
+<li><a class="reference internal" href="#mock-chained-methods">Mock chained methods</a></li>
+<li><a class="reference internal" href="#mocking-a-context-manager">Mocking a context manager</a></li>
+<li><a class="reference internal" href="#mocking-the-builtin-open-used-as-a-context-manager">Mocking the builtin open used as a context manager</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="examples.html"
+                        title="previous chapter">Further Examples</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="changelog.html"
+                        title="next chapter">CHANGELOG</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/compare.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
       <div class="clearer"></div>
     </div>
-  <div id="breadcrumbs">
-    Mock Library Comparison
-    </ul>
-  </div>
-  <script type="text/javascript" charset="utf-8" src="_static/toc.js"></script>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="changelog.html" title="CHANGELOG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="Further Examples"
+             >previous</a> |</li>
+        <li><a href="index.html">Mock 1.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2007-2012, Michael Foord &amp; the mock team.
+      Last updated on Nov 05, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
   </body>
 </html>

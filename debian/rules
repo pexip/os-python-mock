@@ -37,6 +37,7 @@ override_dh_auto_install:
 		$$py -B setup.py install --skip-build --root debian/python3-mock \
 		                      --install-layout deb; \
 	done
+	rm debian/python*-mock/usr/lib/python*/*-packages/mock*.egg-info/SOURCES.txt
 
 .PHONY: override_dh_installchangelogs
 override_dh_installchangelogs:
@@ -48,6 +49,15 @@ override_dh_compress:
 
 .PHONY: override_dh_clean
 override_dh_clean:
-	rm -rf docs/.build
+	rm -rf docs/.build tests/__pycache__ __pycache__
 	dh_clean
+
+.PHONY: override_dh_auto_test
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	set -e; \
+	for py in $(PYVERS) $(PY3VERS); do \
+		$$py setup.py test ; \
+	done
+endif
 
