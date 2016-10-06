@@ -1,2 +1,4 @@
 version=3
-http://pypi.python.org/packages/source/m/mock/mock-([\d\.]+)\.tar\.gz
+opts=uversionmangle=s/(rc|a|b|c)/~$1/,repacksuffix=+dfsg,dversionmangle=s/\+dfsg$//,\
+pgpsigurlmangle=s/$/.asc/ \
+https://pypi.debian.net/mock/mock-(.+)\.(?:zip|tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))

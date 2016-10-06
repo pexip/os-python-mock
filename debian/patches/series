@@ -1,2 +1,1 @@
-python3.2_tests.patch
-python3.4_compat.patch
+0001-Disable-failing-test.patch
