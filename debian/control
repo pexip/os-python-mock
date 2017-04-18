@@ -1,8 +1,9 @@
 Source: python-mock
 Section: python
 Priority: extra
-Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
-Uploaders: David Watson <david@kutoken.com>,
+Maintainer: Pexip AS <packaging@pexip.com>
+XSBC-Pexip-Original-Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+XSBC-Pexip-Original-Uploaders: David Watson <david@kutoken.com>,
            Michael Fladischer <FladischerMichael@fladi.at>
 Build-Depends: debhelper (>= 8),
                python-all (>= 2.6.6-3~),
