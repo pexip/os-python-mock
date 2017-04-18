@@ -61,6 +61,3 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	done
 endif
 
-.PHONY: override_dh_sphinxdoc
-override_dh_sphinxdoc:
-	dh_sphinxdoc -X jquery.js -X underscore.js

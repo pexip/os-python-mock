@@ -1,3 +1,19 @@
+python-mock (1.0.1-3pexip1) pexip; urgency=low
+
+  * New upstream release
+  * Drop Pexip changes
+
+ -- John-Mark Bell <jmb@pexip.com>  Tue, 18 Apr 2017 07:30:46 +0100
+
+python-mock (1.0.1-3) unstable; urgency=medium
+
+  * Team upload.
+  * d/patches/python3.4_compat.patch: Fix FTBFS with Python 3.4.
+    (Closes: #739890) (LP: #1283742)
+  * d/control: Bump Standards-Version with no other changes necessary.
+
+ -- Barry Warsaw <barry@debian.org>  Wed, 26 Feb 2014 15:39:36 -0500
+
 python-mock (1.0.1-2pexip1) precise; urgency=low
 
   * Import Debian build rules from upstream SVN.
