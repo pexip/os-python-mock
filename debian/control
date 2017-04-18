@@ -17,6 +17,7 @@ X-Python3-Version: >= 3.0
 Homepage: http://www.voidspace.org.uk/python/mock/
 Vcs-Svn: svn://anonscm.debian.org/python-modules/packages/python-mock/trunk/
 Vcs-Browser: http://anonscm.debian.org/viewvc/python-modules/packages/python-mock/trunk/
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie
 
 Package: python-mock
 Architecture: all
