@@ -1,3 +1,9 @@
+python-mock (2.0.0-3pexip1) pexip; urgency=medium
+
+  * Migrate to Stretch
+
+ -- John-Mark Bell <jmb@pexip.com>  Tue, 10 Jul 2018 11:46:20 +0000
+
 python-mock (2.0.0-3) unstable; urgency=medium
 
   * Team upload (with agreement from Ondřej Nový).
