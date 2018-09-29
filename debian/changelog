@@ -1,3 +1,18 @@
+python-mock (2.0.0-4) unstable; urgency=medium
+
+  * Bumped debhelper version to 11
+  * d/control: Set Vcs-* to salsa.debian.org
+  * d/copyright: Use https protocol in Format field
+  * d/control: Deprecating priority extra as per policy 4.0.1
+  * Convert git repository from git-dpm to gbp layout
+  * Use 'python3 -m sphinx' instead of sphinx-build for building docs
+  * Bump standards version to 4.2.1 (no changes)
+  * d/rules: Don't set OSLO_PACKAGE_VERSION, pybuild sets PBR_VERSION
+    automatically
+  * Add upstream metadata
+
+ -- Ondřej Nový <onovy@debian.org>  Sat, 29 Sep 2018 20:36:39 +0200
+
 python-mock (2.0.0-3) unstable; urgency=medium
 
   * Team upload (with agreement from Ondřej Nový).
