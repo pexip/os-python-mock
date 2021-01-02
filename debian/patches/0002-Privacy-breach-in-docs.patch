@@ -1,0 +1,17 @@
+Subject: Fix privacy breach in docs
+Author: Ondřej Nový <onovy@debian.org
+Forwarded: not-needed
+
+--- a/README.rst
++++ b/README.rst
+@@ -24,10 +24,8 @@
+ :Build status:
+     |CircleCI|_ |Docs|_
+ 
+-    .. |CircleCI| image:: https://circleci.com/gh/testing-cabal/mock/tree/master.svg?style=shield
+     .. _CircleCI: https://circleci.com/gh/testing-cabal/mock/tree/master
+ 
+-    .. |Docs| image:: https://readthedocs.org/projects/mock/badge/?version=latest
+     .. _Docs: http://mock.readthedocs.org/en/latest/
+ 
+ .. _Mock Homepage: http://mock.readthedocs.org/en/latest/

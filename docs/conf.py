@@ -26,14 +26,19 @@ import mock
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.doctest']
+extensions = [
+    'sphinx.ext.intersphinx',
+    ]
+
+intersphinx_mapping = {
+    'python': ('http://docs.python.org/dev', None),
+}
 
 doctest_global_setup = """
 import os
 import sys
 import mock
 from mock import * # yeah, I know :-/
-import unittest2
 import __main__
 
 if os.getcwd() not in sys.path:
@@ -72,10 +77,7 @@ copyright = u'2007-2015, Michael Foord & the mock team'
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents. Supplied by pbr.
 #
-# The short X.Y version.
-version = mock.mock._v.brief_string()
-# The full version, including alpha/beta/rc tags.
-release = mock.__version__
+version = release = mock.__version__
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used: (Set from pbr)
