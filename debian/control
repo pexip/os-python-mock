@@ -24,7 +24,7 @@ Vcs-Browser: https://salsa.debian.org/python-team/modules/python-mock
 Vcs-Git: https://salsa.debian.org/python-team/modules/python-mock.git
 Homepage: https://github.com/testing-cabal/mock
 Testsuite: autopkgtest-pkg-python
-XS-Pexip-Upstream: http://ftp.debian.org/debian/ buster
+XS-Pexip-Upstream: http://deb.debian.org/debian/ bullseye
 
 Package: python-mock
 Architecture: all
