@@ -1,3 +1,52 @@
+python-mock (4.0.3-1) unstable; urgency=low
+
+  [ Ondřej Nový ]
+  * New upstream release.
+  * d/control: Update Maintainer field with new Debian Python Team
+    contact address.
+  * d/control: Update Vcs-* fields with new Debian Python Team Salsa
+    layout.
+  * Bump standards version to 4.5.1.
+
+  [ Debian Janitor ]
+  * Apply multi-arch hints.
+    + python-mock-doc: Add Multi-Arch: foreign.
+
+ -- Ondřej Nový <onovy@debian.org>  Sat, 02 Jan 2021 15:25:17 +0100
+
+python-mock (4.0.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Rebase patches.
+  * Drop python3-six from B-D-I.
+  * Bump debhelper compat level to 13.
+  * Set Rules-Requires-Root: no.
+  * Bump standards version to 4.5.0.
+
+ -- Ondřej Nový <onovy@debian.org>  Fri, 12 Jun 2020 13:36:59 +0200
+
+python-mock (3.0.5-2) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * Bump Standards-Version to 4.4.1.
+
+  [ Sandro Tosi ]
+  * Drop python2 support; Closes: #937926
+
+ -- Sandro Tosi <morph@debian.org>  Tue, 14 Apr 2020 09:44:42 -0400
+
+python-mock (3.0.5-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump debhelper compat level to 12 and use debhelper-compat
+  * Bump Standards-Version to 4.4.0 (no changes needed)
+  * d/copyright: Bump my copyright year
+  * d/watch: Use GitHub, because PyPi release doesn't contain tests
+  * d/upstream/signing-key.asc: Drop, upstream releases are not signed anymore
+  * Fix privacy breach in docs
+
+ -- Ondřej Nový <onovy@debian.org>  Tue, 16 Jul 2019 19:31:51 +0200
+
 python-mock (2.0.0-4pexip3) pexip; urgency=medium
 
   * Rebuild to put python3-mock into main

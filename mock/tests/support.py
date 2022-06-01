@@ -1,17 +1,7 @@
+import contextlib
 import sys
 
-info = sys.version_info
-import unittest2
-
-
-try:
-    callable = callable
-except NameError:
-    def callable(obj):
-        return hasattr(obj, '__call__')
-
-
-with_available = sys.version_info[:2] >= (2, 5)
+target = {'foo': 'FOO'}
 
 
 def is_instance(obj, klass):
@@ -22,15 +12,41 @@ def is_instance(obj, klass):
 class SomeClass(object):
     class_attribute = None
 
-    def wibble(self):
-        pass
+    def wibble(self): pass
 
 
 class X(object):
     pass
 
-try:
-    next = next
-except NameError:
-    def next(obj):
-        return obj.next()
+
+@contextlib.contextmanager
+def uncache(*names):
+    """Uncache a module from sys.modules.
+
+    A basic sanity check is performed to prevent uncaching modules that either
+    cannot/shouldn't be uncached.
+
+    """
+    for name in names:
+        assert name not in ('sys', 'marshal', 'imp')
+        try:
+            del sys.modules[name]
+        except KeyError:
+            pass
+    try:
+        yield
+    finally:
+        for name in names:
+            del sys.modules[name]
+
+
+class _ALWAYS_EQ:
+    """
+    Object that is equal to anything.
+    """
+    def __eq__(self, other):
+        return True
+    def __ne__(self, other):
+        return False
+
+ALWAYS_EQ = _ALWAYS_EQ()
