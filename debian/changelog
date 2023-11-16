@@ -1,3 +1,9 @@
+python-mock (4.0.3-4pexip1) pexip-bookworm; urgency=medium
+
+  * Initial bookworm build
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Thu, 16 Nov 2023 10:24:42 +0000
+
 python-mock (4.0.3-4) unstable; urgency=medium
 
   [ Debian Janitor ]
